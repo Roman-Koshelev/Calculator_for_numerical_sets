@@ -1,4 +1,5 @@
 #include <assert.h>
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -38,7 +39,7 @@ int provCorect(const char* str)
 		case ' ':
 			break;
 		case '(':
-			if (iter != '(' && iter != '[' && iter != '^')
+			if (iter != '(' && iter != '^')
 				return 1;
 			iter = str[i];
 			ch1++;
@@ -76,7 +77,8 @@ int provCorect(const char* str)
 			break;
 
 		default:
-			if (iter != '0' && iter != '[' && iter != ',')
+
+			if (isdigit(str[i]) == 0 || (iter != '0' && iter != '[' && iter != ','))
 				return 1;
 			iter = '0';
 		}
@@ -212,9 +214,10 @@ int main()
 			str[strlen(str) - 1] = '\0';
 		}
 
-		set res = kernel(str);
+		const set res = kernel(str);
 		printf("%s\n", setToStr(res, str));
 		freeSet(res);
 	}
+	// system("pause");
 	return EXIT_SUCCESS;
 }
